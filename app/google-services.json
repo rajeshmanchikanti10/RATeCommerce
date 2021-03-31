@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "753638398776",
+    "project_id": "ratecommerce",
+    "storage_bucket": "ratecommerce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753638398776:android:396e24cabc732795b17fcd",
+        "android_client_info": {
+          "package_name": "com.example.ratecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753638398776-mmpoq5i5i6rod2vmrd7m2ogmmvv9gtrh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOkaIphYUqHf5YN3CjFu5lahSHlqtgjn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "753638398776-mmpoq5i5i6rod2vmrd7m2ogmmvv9gtrh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
