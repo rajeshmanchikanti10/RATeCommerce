@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".cartActivity">
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:id="@+id/cart_recycler_view">
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <RelativeLayout
+
+        android:layout_above="@+id/cart_next_btn"
+        android:id="@+id/cart_layout_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="10dp"
+        android:layout_alignParentRight="true">
+<TextView
+        android:id="@+id/cart_price_text"
+    android:layout_above="@id/cart_next_btn"
+        android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    android:text="Total Price ="
+           android:padding="10dp"
+            android:gravity="center"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+       >
+
+      </TextView>
+
+        <Button
+            android:id="@+id/cart_next_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Next"
+            android:background="@drawable/buttons"
+            android:layout_margin="10dp"
+            >
+
+        </Button>
+
+</RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>
