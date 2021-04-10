@@ -195,9 +195,11 @@ public class HomeAcitivity extends AppCompatActivity  {
                 }
                 else if(id==R.id.nav_settings)
                 {
-                    Intent intent=new Intent(HomeAcitivity.this,SettingsActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if(!type.equals("Admin")) {
+                        Intent intent = new Intent(HomeAcitivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
                 return true;
             }
