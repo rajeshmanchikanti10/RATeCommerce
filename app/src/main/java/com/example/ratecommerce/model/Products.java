@@ -1,22 +1,29 @@
 package com.example.ratecommerce.model;
 
 public class Products {
-    public  String pname,price,description,category,image,time;
+    public  String pname,price,description,category,image,time,pid;
     public Products(){
 
     }
 
-    public Products(String pname, String price, String description, String category, String image, String time) {
+    public Products(String pname, String price, String description, String category, String image, String time,String pid) {
         this.pname = pname;
         this.price = price;
         this.description = description;
         this.category = category;
         this.image = image;
         this.time = time;
+        this.pid=pid;
     }
-
+    public String getPid() {
+        return pid;
+    }
     public String getPname() {
         return pname;
+    }
+
+    public void setPid(String pname) {
+        this.pid = pid;
     }
 
     public void setPname(String pname) {

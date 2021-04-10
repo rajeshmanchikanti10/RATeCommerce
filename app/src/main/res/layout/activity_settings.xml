@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/settings_profile_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/profile"
+        android:layout_margin="30dp">
+
+    </de.hdodenhof.circleimageview.CircleImageView>
+    <TextView
+        android:id="@+id/settings_updateprofile_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settings_profile_image"
+        android:text="update profile"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true">
+        
+    </TextView>
+    <EditText
+        android:id="@+id/settings_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_design"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        android:layout_below="@+id/settings_updateprofile_btn"
+        android:hint="Name"
+        >
+
+    </EditText>
+    <EditText
+        android:id="@+id/settings_phonenumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_design"
+        android:padding="20dp"
+        android:layout_below="@+id/settings_name"
+        android:layout_margin="10dp"
+        android:hint="Phone Number">
+
+    </EditText>
+    <EditText
+        android:id="@+id/settings_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/settings_phonenumber"
+        android:background="@drawable/input_design"
+        android:padding="20dp"
+        android:layout_margin="10dp"
+        android:hint="Address">
+
+    </EditText>
+<Button
+
+    android:id="@+id/settings_updatebtn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/buttons"
+    android:padding="15dp"
+    android:layout_below="@id/settings_address"
+    android:layout_margin="10dp"
+    android:text="update"
+    android:textStyle="bold"
+    android:textSize="20sp"
+    android:textAllCaps="false"
+    >
+
+</Button>
+    <Button
+        android:id="@+id/settings_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_below="@+id/settings_updatebtn"
+        android:layout_margin="10dp"
+        android:background="@drawable/buttons"
+        android:text="Close"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        >
+
+    </Button>
+
+</RelativeLayout>

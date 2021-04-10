@@ -1,6 +1,7 @@
 package com.example.ratecommerce;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,8 +20,11 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
@@ -38,32 +42,66 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import kotlinx.coroutines.channels.ReceiveChannel;
 
 public class HomeAcitivity extends AppCompatActivity  {
-
+    CircleImageView profileimage;
     private AppBarConfiguration mAppBarConfiguration;
     private NavigationView navigationView;
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
+    private int totalprice=0;
+    private  String type="";
+    DatabaseReference cartref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_acitivity);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
+        profileimage=findViewById(R.id.user_profile_image);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         navigationView=findViewById(R.id.nav_view);
-
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        if(bundle!=null)
+        type=getIntent().getExtras().get("Admin").toString();
 
         View headerView=navigationView.getHeaderView(0);
         TextView userNameTextView =headerView.findViewById(R.id.user_profile_name);
         CircleImageView profileImageView=headerView.findViewById(R.id.user_profile_image);
-        userNameTextView.setText(Prevalent.currentOnlineUser.getName());
+
+        if(!type.equals("Admin")) {
+            cartref=FirebaseDatabase.getInstance().getReference().child("Cart List").child("user view").child(Prevalent.currentOnlineUser.getPhonenumber()).child("Products");
+            userNameTextView.setText(Prevalent.currentOnlineUser.getName());
+            //(Prevalent.currentOnlineUser.getImage()!=null)
+           //casso.get().load(Prevalent.currentOnlineUser.getImage()).placeholder(R.drawable.profile).into(profileimage);
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(!type.equals("Admin")) {
+                    totalprice = 0;
+                    cartref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            //Toast.makeText(HomeAcitivity.this,"count: "+snapshot.getChildrenCount(),Toast.LENGTH_LONG).show();
+                            for (DataSnapshot childsnap : snapshot.getChildren()) {
+                                Cart cartitem = childsnap.getValue(Cart.class);
+                                totalprice += Integer.valueOf(cartitem.getQuantity()) * Integer.valueOf(cartitem.getPrice());
+                            }
+                            //Toast.makeText(HomeAcitivity.this,""+totalprice,Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(HomeAcitivity.this, cartActivity.class);
+                            intent.putExtra("carttotalprice", totalprice);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -112,27 +150,56 @@ public class HomeAcitivity extends AppCompatActivity  {
                 if(id==R.id.nav_cart)
                 {
 
+                    if(!type.equals("Admin")) {
+                        totalprice = 0;
+                        cartref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                //Toast.makeText(HomeAcitivity.this,"count: "+snapshot.getChildrenCount(),Toast.LENGTH_LONG).show();
+                                for (DataSnapshot childsnap : snapshot.getChildren()) {
+                                    Cart cartitem = childsnap.getValue(Cart.class);
+                                    totalprice += Integer.valueOf(cartitem.getQuantity()) * Integer.valueOf(cartitem.getPrice());
+                                }
+                                //Toast.makeText(HomeAcitivity.this,""+totalprice,Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(HomeAcitivity.this, cartActivity.class);
+                                intent.putExtra("carttotalprice", "" + totalprice);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+
                 }
                 else if(id==R.id.nav_categories)
                 {
 
                 }
-                else if(id==R.id.nav_orders)
-                {
 
-                }
                 else if(id==R.id.nav_logout)
                 {
-                    Intent intent=new Intent(HomeAcitivity.this,MainActivity.class);
-                    //startActivity(intent);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| intent.FLAG_ACTIVITY_CLEAR_TASK );
-                    startActivity(intent);
-                    finish();
-                    Toast.makeText(HomeAcitivity.this,"Hello user we are going to mainpage!",Toast.LENGTH_LONG).show();
+                    if(!type.equals("Admin")) {
+                        SharedPreferences sp1=getSharedPreferences("Login", MODE_PRIVATE);
+                        SharedPreferences.Editor editor =sp1.edit();
+                        editor.putString("phonenumber", "");
+                        editor.putString("password", "");
+                        editor.commit();
+                        Intent intent = new Intent(HomeAcitivity.this, MainActivity.class);
+                        //startActivity(intent);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(HomeAcitivity.this, "Hello user we are going to mainpage!", Toast.LENGTH_LONG).show();
+                    }
                 }
                 else if(id==R.id.nav_settings)
                 {
-
+                    Intent intent=new Intent(HomeAcitivity.this,SettingsActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 return true;
             }
@@ -151,8 +218,26 @@ public class HomeAcitivity extends AppCompatActivity  {
             protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull Products model) {
                 holder.textProductName.setText(model.getPname());
                 holder.textProductDescription.setText(model.getDescription());
-                holder.textProductPrice.setText("Price"+model.getPrice()+"$");
+                holder.textProductPrice.setText("Price"+model.getPrice());
                 Picasso.get().load(model.getImage()).into(holder.imageView);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(type!=null && type.equals("Admin"))
+                        {
+                            Intent intent = new Intent(HomeAcitivity.this, AdminManageAcitivity.class);
+                            intent.putExtra("pid", model.getTime());
+                            Toast.makeText(HomeAcitivity.this, model.getTime(), Toast.LENGTH_LONG).show();
+                            startActivity(intent);
+                        }
+                        else {
+                            Intent intent = new Intent(HomeAcitivity.this, ProductDetailsActivity.class);
+                            intent.putExtra("pid", model.getTime());
+                            Toast.makeText(HomeAcitivity.this, model.getTime(), Toast.LENGTH_LONG).show();
+                            startActivity(intent);
+                        }
+                    }
+                });
             }
 
             @NonNull

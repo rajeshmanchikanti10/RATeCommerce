@@ -168,6 +168,27 @@
 
 
     </LinearLayout>
+  <Button
+        android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/Manage_product_btn"
+        android:layout_marginBottom="70dp"
+      android:text="Modify Products"
+      android:textAllCaps="false"
+
+        android:background="@drawable/buttons"
+        />
+    <Button
+        android:id="@+id/admin_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/buttons"
+        android:text="logout "
+        android:textAllCaps="false"/>
+
 
 
 </RelativeLayout>

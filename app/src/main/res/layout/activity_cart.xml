@@ -43,7 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="Next"
+            android:text="Proceed to Buy"
+            android:textAllCaps="false"
             android:background="@drawable/buttons"
             android:layout_margin="10dp"
             >

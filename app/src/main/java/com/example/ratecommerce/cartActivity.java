@@ -31,24 +31,42 @@ import java.util.Calendar;
 public class cartActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private Button nextbtn;
+    private Button proceedtobuybtn;
     private TextView totalamounttxt;
+    private String totalprice;
+    Bundle bundle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         recyclerView=findViewById(R.id.cart_recycler_view);
         recyclerView.setHasFixedSize(true);
+        totalamounttxt=findViewById(R.id.cart_price_text);
+        bundle=getIntent().getExtras();
+        totalprice= getIntent().getExtras().get("carttotalprice").toString();
+        //Toast.makeText(cartActivity.this,""+totalprice,Toast.LENGTH_LONG).show();
         layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        nextbtn=findViewById(R.id.cart_next_btn);
-        //totalamounttxt=findViewById(R.id.cart_price_text);
+        proceedtobuybtn=findViewById(R.id.cart_next_btn);
+        proceedtobuybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(cartActivity.this,ConfirmorderActivity.class);
+                intent.putExtra("Total Price",totalprice);
+                startActivity(intent);
+            }
+        });
+
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        //totalamounttxt.setText("Total Amount "+totalprice+"$");
+        totalamounttxt.setText("Total Amount "+totalprice+"$");
         final DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child("Cart List");
         FirebaseRecyclerOptions<Cart> options =new FirebaseRecyclerOptions.Builder<Cart>().setQuery(databaseReference.child("user view").
                 child(Prevalent.currentOnlineUser.getPhonenumber()).child("Products"),Cart.class).build();
@@ -58,6 +76,8 @@ public class cartActivity extends AppCompatActivity {
             holder.TextProductQuantity.setText("Quantity= "+model.getQuantity());
             holder.TextProductPrice.setText("Price "+model.getPrice()+"$");
             holder.TextproductName.setText(model.getPname());
+            //totalprice+=Integer.parseInt(model.getPrice())*Integer.parseInt(model.getQuantity());
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

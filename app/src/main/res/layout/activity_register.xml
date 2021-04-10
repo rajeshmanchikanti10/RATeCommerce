@@ -58,6 +58,7 @@
         android:layout_marginRight="15dp"
         android:background="@drawable/input_design"
         android:hint="Password"
+        android:inputType="textPassword"
         android:textColor="@color/white"
         android:textColorHint="@color/colorPrimaryDark"
         android:layout_below="@id/Register_phone_number_input"
