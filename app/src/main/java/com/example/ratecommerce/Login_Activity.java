@@ -26,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
+import io.paperdb.Paper;
+
 public class Login_Activity extends AppCompatActivity {
     private Button loginButton;
     private ProgressDialog loadingbar;
@@ -47,6 +49,7 @@ public class Login_Activity extends AppCompatActivity {
         admintextbtn=findViewById(R.id.iam_admin_text);
         notadmintextbtn=findViewById(R.id.iam_not_admin_text);
         loadingbar=new ProgressDialog(this);
+        Paper.init(this);
         admintextbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +105,7 @@ public class Login_Activity extends AppCompatActivity {
     }
     private void ValidateUser(String PhoneNumber,String password)
     {
+
         final DatabaseReference databaseReference;
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -127,11 +131,8 @@ public class Login_Activity extends AppCompatActivity {
                                 }
                                 else if(UserType.equals("users"))
                                 {
-                                    sp=getSharedPreferences("Login", MODE_PRIVATE);
-                                    Ed=sp.edit();
-                                    Ed.putString("phonenumber",PhoneNumber );
-                                    Ed.putString("password",password);
-                                    Ed.commit();
+                                    Paper.book().write(Prevalent.UserPhoneKey,PhoneNumber);
+                                    Paper.book().write(Prevalent.UserPasswordKey,password);
                                     loadingbar.dismiss();
                                     Toast.makeText(Login_Activity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
 
