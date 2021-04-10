@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.paperdb.Paper;
 import kotlinx.coroutines.channels.ReceiveChannel;
 
 public class HomeAcitivity extends AppCompatActivity  {
@@ -57,7 +58,7 @@ public class HomeAcitivity extends AppCompatActivity  {
         setContentView(R.layout.activity_home_acitivity);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
-        profileimage=findViewById(R.id.user_profile_image);
+
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         navigationView=findViewById(R.id.nav_view);
@@ -71,10 +72,11 @@ public class HomeAcitivity extends AppCompatActivity  {
         CircleImageView profileImageView=headerView.findViewById(R.id.user_profile_image);
 
         if(!type.equals("Admin")) {
+            Toast.makeText(HomeAcitivity.this,Prevalent.currentOnlineUser.getPhonenumber(),Toast.LENGTH_SHORT).show();
             cartref=FirebaseDatabase.getInstance().getReference().child("Cart List").child("user view").child(Prevalent.currentOnlineUser.getPhonenumber()).child("Products");
             userNameTextView.setText(Prevalent.currentOnlineUser.getName());
             //(Prevalent.currentOnlineUser.getImage()!=null)
-           //casso.get().load(Prevalent.currentOnlineUser.getImage()).placeholder(R.drawable.profile).into(profileimage);
+           Picasso.get().load(Prevalent.currentOnlineUser.getImage()).placeholder(R.drawable.profile).into(profileImageView);
         }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,11 +184,7 @@ public class HomeAcitivity extends AppCompatActivity  {
                 else if(id==R.id.nav_logout)
                 {
                     if(!type.equals("Admin")) {
-                        SharedPreferences sp1=getSharedPreferences("Login", MODE_PRIVATE);
-                        SharedPreferences.Editor editor =sp1.edit();
-                        editor.putString("phonenumber", "");
-                        editor.putString("password", "");
-                        editor.commit();
+                        Paper.book().destroy();
                         Intent intent = new Intent(HomeAcitivity.this, MainActivity.class);
                         //startActivity(intent);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | intent.FLAG_ACTIVITY_CLEAR_TASK);
