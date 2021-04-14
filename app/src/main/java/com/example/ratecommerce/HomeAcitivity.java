@@ -49,7 +49,7 @@ public class HomeAcitivity extends AppCompatActivity  {
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    private int totalprice=0;
+    private float totalprice=0;
     private  String type="";
     DatabaseReference cartref;
     @Override
@@ -72,7 +72,7 @@ public class HomeAcitivity extends AppCompatActivity  {
         CircleImageView profileImageView=headerView.findViewById(R.id.user_profile_image);
 
         if(!type.equals("Admin")) {
-            Toast.makeText(HomeAcitivity.this,Prevalent.currentOnlineUser.getPhonenumber(),Toast.LENGTH_SHORT).show();
+           // Toast.makeText(HomeAcitivity.this,Prevalent.currentOnlineUser.getPhonenumber(),Toast.LENGTH_SHORT).show();
             cartref=FirebaseDatabase.getInstance().getReference().child("Cart List").child("user view").child(Prevalent.currentOnlineUser.getPhonenumber()).child("Products");
             userNameTextView.setText(Prevalent.currentOnlineUser.getName());
             //(Prevalent.currentOnlineUser.getImage()!=null)
@@ -89,7 +89,7 @@ public class HomeAcitivity extends AppCompatActivity  {
                             //Toast.makeText(HomeAcitivity.this,"count: "+snapshot.getChildrenCount(),Toast.LENGTH_LONG).show();
                             for (DataSnapshot childsnap : snapshot.getChildren()) {
                                 Cart cartitem = childsnap.getValue(Cart.class);
-                                totalprice += Integer.valueOf(cartitem.getQuantity()) * Integer.valueOf(cartitem.getPrice());
+                                totalprice += Float.valueOf(cartitem.getQuantity()) * Float.valueOf(cartitem.getPrice());
                             }
                             //Toast.makeText(HomeAcitivity.this,""+totalprice,Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(HomeAcitivity.this, cartActivity.class);
@@ -176,9 +176,10 @@ public class HomeAcitivity extends AppCompatActivity  {
                     }
 
                 }
-                else if(id==R.id.nav_categories)
+                else if(id==R.id.nav_search)
                 {
-
+                    Intent intent=new Intent(HomeAcitivity.this,searchActivity.class);
+                    startActivity(intent);
                 }
 
                 else if(id==R.id.nav_logout)
@@ -218,7 +219,7 @@ public class HomeAcitivity extends AppCompatActivity  {
             protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull Products model) {
                 holder.textProductName.setText(model.getPname());
                 holder.textProductDescription.setText(model.getDescription());
-                holder.textProductPrice.setText("Price"+model.getPrice());
+                holder.textProductPrice.setText("Price "+model.getPrice());
                 Picasso.get().load(model.getImage()).into(holder.imageView);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -227,13 +228,13 @@ public class HomeAcitivity extends AppCompatActivity  {
                         {
                             Intent intent = new Intent(HomeAcitivity.this, AdminManageAcitivity.class);
                             intent.putExtra("pid", model.getTime());
-                            Toast.makeText(HomeAcitivity.this, model.getTime(), Toast.LENGTH_LONG).show();
+                            //Toast.makeText(HomeAcitivity.this, model.getTime(), Toast.LENGTH_LONG).show();
                             startActivity(intent);
                         }
                         else {
                             Intent intent = new Intent(HomeAcitivity.this, ProductDetailsActivity.class);
                             intent.putExtra("pid", model.getTime());
-                            Toast.makeText(HomeAcitivity.this, model.getTime(), Toast.LENGTH_LONG).show();
+                            //Toast.makeText(HomeAcitivity.this, model.getTime(), Toast.LENGTH_LONG).show();
                             startActivity(intent);
                         }
                     }
