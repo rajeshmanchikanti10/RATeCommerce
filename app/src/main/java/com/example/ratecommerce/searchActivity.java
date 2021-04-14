@@ -53,7 +53,7 @@ private String stringinputtext;
         super.onStart();
         DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("Products");
         FirebaseRecyclerOptions<Products> options=new FirebaseRecyclerOptions.Builder<Products>()
-                .setQuery(databaseReference.orderByChild("pname").startAt(stringinputtext),Products.class).build();
+                .setQuery(databaseReference.orderByChild("description").startAt(stringinputtext),Products.class).build();
         FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter=new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull Products model) {
