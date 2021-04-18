@@ -11,7 +11,7 @@ An eCommerce app
 2)Product Management<br/>
 3)user profile Management<br/>
 4)search products<br/>
-5)Registration\n
+5)Registration<br/>
 Firebase database is used to implement all above functionalities
 
 ### 1) Cart Management
