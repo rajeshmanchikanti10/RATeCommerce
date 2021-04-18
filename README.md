@@ -7,10 +7,10 @@ An eCommerce app
 
 ## About App
 ### RAT eCommerce app is online shopping android application,which has following functionalities
-1)Cart Management\n
-2)Product Management\n
-3)user profile Management\n
-4)search products\n
+1)Cart Management<br/>
+2)Product Management<br/>
+3)user profile Management<br/>
+4)search products<br/>
 5)Registration\n
 Firebase database is used to implement all above functionalities
 
