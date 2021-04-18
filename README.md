@@ -22,11 +22,11 @@ cartActivity ProductDetailsActivity,cart class,prevalent class are used in imple
 AdminAddNewProductActivity,AdminManageActivity,AdminconfigureActivity,products class are used in implementing product Management functionality
 
 ### 3)user profile Management
-settingActivity.java,Prevalent class are userd in implementing user profile Management
+settingActivity.java,Prevalent class are used in implementing user profile Management
 
 ### 4)search products
 
-searchActivity,productDeatilsActivity  are used in implementing search product Activity
+searchActivity,,productDetails Activity  are used in implementing search product Activity
 
 ### 5)Registration
 
